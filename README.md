@@ -1,3 +1,5 @@
+# Setup
+----------------
 Run `npm install` to install all the dependencies.
 Run `npm run dev` to start the development server.
 To build the extension for Chrome, run `npm run build`. The built files will be in the `dist` directory.
