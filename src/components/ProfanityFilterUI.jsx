@@ -1,11 +1,11 @@
 import React from 'react';
 import { ArrowLeft, Clock } from 'lucide-react';
 
-const ProfanityFilterUI = () => {
+const ProfanityFilterUI = ({ onNavigate }) => {
   return (
     <div className="bg-gray-900 text-white p-4 h-screen flex flex-col">
       <header className="mb-4">
-        <ArrowLeft className="cursor-pointer" />
+        <ArrowLeft className="cursor-pointer" onClick={() => onNavigate('main')} />
       </header>
       
       <h1 className="text-2xl font-bold mb-2">Detoxify your online experience</h1>

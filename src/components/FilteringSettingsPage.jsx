@@ -1,10 +1,17 @@
 import React from 'react';
-import { Plus } from 'lucide-react';
+import { Plus, ArrowLeft } from 'lucide-react';
 
-const FilteringSettingsPage = () => {
+const FilteringSettingsPage = ({ onNavigate, profanityList = [], replacements = {} }) => {
+  const [customMode, setCustomMode] = useState(false);
+  const [customWords, setCustomWords] = useState([]);
+  const [editingWord, setEditingWord] = useState('');
+  const [editingReplacement, setEditingReplacement] = useState('');
   return (
     <div className="bg-gray-900 text-white p-4 h-screen flex flex-col">
-      <h1 className="text-2xl font-bold mb-6">Filtering</h1>
+      <header className="mb-6 flex items-center">
+        <ArrowLeft className="cursor-pointer mr-4" onClick={() => onNavigate('main')} />
+        <h1 className="text-2xl font-bold">Filtering</h1>
+      </header>
       
       <section className="mb-6">
         <h2 className="text-lg font-semibold mb-2">Website</h2>
@@ -38,7 +45,10 @@ const FilteringSettingsPage = () => {
         </div>
       </section>
       
-      <button className="bg-blue-500 text-white py-3 rounded mt-auto">
+      <button 
+        className="bg-blue-500 text-white py-3 rounded mt-auto"
+        onClick={() => onNavigate('main')}
+      >
         Save
       </button>
     </div>

@@ -1,7 +1,7 @@
 import React from 'react';
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, ArrowLeft } from 'lucide-react';
 
-const ExamplesPage = () => {
+const ExamplesPage = ({ onNavigate }) => {
   const examples = [
     { name: 'Holly', original: "I'm so pissed off!", filtered: "I'm so angry!" },
     { name: 'Jenny', original: "This is bullsh*t", filtered: "This is ridiculous" },
@@ -12,7 +12,10 @@ const ExamplesPage = () => {
 
   return (
     <div className="bg-gray-900 text-white p-4 h-screen flex flex-col">
-      <h1 className="text-2xl font-bold mb-6">Detoxify Profanity</h1>
+      <header className="mb-6 flex items-center">
+        <ArrowLeft className="cursor-pointer mr-4" onClick={() => onNavigate('main')} />
+        <h1 className="text-2xl font-bold">Detoxify Profanity</h1>
+      </header>
       
       <div className="flex flex-col space-y-4 mb-6 flex-grow overflow-y-auto">
         {examples.map((example, index) => (
@@ -27,7 +30,10 @@ const ExamplesPage = () => {
         ))}
       </div>
       
-      <button className="bg-blue-500 text-white py-3 rounded mt-auto">
+      <button 
+        className="bg-blue-500 text-white py-3 rounded mt-auto"
+        onClick={() => onNavigate('main')}
+      >
         Add to Chrome
       </button>
     </div>

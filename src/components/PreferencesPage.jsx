@@ -1,8 +1,16 @@
 import React, { useState } from 'react';
 import { ArrowLeft, ChevronRight } from 'lucide-react';
 
-const PreferencesPage = () => {
-  const [selectedOptions, setSelectedOptions] = useState(['Slurs']);
+const PreferencesPage = ({ onNavigate, preferences = {} }) => {
+  // Initialize state with default preferences or passed values
+  const [selectedOptions, setSelectedOptions] = useState(() => {
+    const options = [];
+    if (preferences.filterSlurs) options.push('Slurs');
+    if (preferences.filterInsults) options.push('Insults');
+    if (preferences.filterBlasphemy) options.push('Blasphemy');
+    if (preferences.filterProfanity) options.push('Profanity');
+    return options.length > 0 ? options : ['Slurs'];
+  });
   
   const options = ['Slurs', 'Insults', 'Blasphemy', 'Profanity'];
 
@@ -17,7 +25,7 @@ const PreferencesPage = () => {
   return (
     <div className="bg-gray-900 text-white p-4 h-screen flex flex-col">
       <header className="mb-6 flex items-center">
-        <ArrowLeft className="cursor-pointer mr-4" />
+        <ArrowLeft className="cursor-pointer mr-4" onClick={() => onNavigate('main')} />
         <h1 className="text-2xl font-bold">Set preferences</h1>
       </header>
       
@@ -40,7 +48,29 @@ const PreferencesPage = () => {
         ))}
       </div>
       
-      <button className="bg-blue-500 text-white py-3 rounded mt-auto">
+      <button 
+        className="bg-blue-500 text-white py-3 rounded mt-auto"
+        onClick={() => {
+          // Convert selected options to preference object
+          const newPreferences = {
+            filterSlurs: selectedOptions.includes('Slurs'),
+            filterInsults: selectedOptions.includes('Insults'),
+            filterBlasphemy: selectedOptions.includes('Blasphemy'),
+            filterProfanity: selectedOptions.includes('Profanity')
+          };
+          
+          // Send preferences to background script
+          if (typeof chrome !== 'undefined' && chrome.runtime) {
+            chrome.runtime.sendMessage({ 
+              action: 'updatePreferences', 
+              preferences: newPreferences 
+            });
+          }
+          
+          // Navigate back to main
+          onNavigate('main');
+        }}
+      >
         Save changes
       </button>
     </div>
